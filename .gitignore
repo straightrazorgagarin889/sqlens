@@ -1,0 +1,17 @@
+out
+dist
+node_modules
+.vscode-test/
+*.vsix
+.DS_Store
+
+# Compiled TypeScript output in src (tests use out/, bundle uses dist/)
+src/**/*.js
+src/**/*.js.map
+
+# Development test/debug files
+ast-test.php
+simple-test.php
+test-examples.php
+debug-ast.js
+.claude

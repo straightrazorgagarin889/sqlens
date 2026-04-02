@@ -1,0 +1,252 @@
+{
+  "name": "sqlens",
+  "displayName": "SQLens",
+  "description": "VS Code extension for PHP SQL query analysis, visualization and optimization",
+  "version": "0.0.1",
+  "publisher": "aliyilmazco",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aliyilmazco/sqlens.git"
+  },
+  "engines": {
+    "vscode": "^1.103.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Debuggers",
+    "Other"
+  ],
+  "keywords": [
+    "php",
+    "sql",
+    "mysql",
+    "database",
+    "query",
+    "analysis",
+    "security",
+    "performance"
+  ],
+  "activationEvents": [
+    "onLanguage:php"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "sqlens.previewQuery",
+        "title": "Preview Query",
+        "category": "SQLens"
+      },
+      {
+        "command": "sqlens.explainQuery",
+        "title": "Explain Query",
+        "category": "SQLens"
+      },
+      {
+        "command": "sqlens.copyQuery",
+        "title": "Copy Query",
+        "category": "SQLens"
+      },
+      {
+        "command": "sqlens.refreshQueries",
+        "title": "Refresh Queries",
+        "category": "SQLens",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "sqlens.showSafetyInfo",
+        "title": "Show Safety Information",
+        "category": "SQLens"
+      },
+      {
+        "command": "sqlens.testExtension",
+        "title": "Test Extension",
+        "category": "SQLens"
+      },
+      {
+        "command": "sqlens.resetExtension",
+        "title": "Reset Extension",
+        "category": "SQLens"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "sqlensQueriesView",
+          "name": "SQL Queries",
+          "when": "resourceExtname == .php",
+          "icon": "$(database)"
+        },
+        {
+          "id": "sqlensExplainView",
+          "name": "SQL Explain Plan",
+          "when": "resourceExtname == .php",
+          "icon": "$(graph)"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "sqlensQueriesView",
+        "contents": "No SQL queries found in the current workspace.\n[Refresh](command:sqlens.refreshQueries)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "sqlens.refreshQueries",
+          "when": "view == sqlensQueriesView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SQLens",
+      "properties": {
+        "sqlens.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable SQLens extension"
+        },
+        "sqlens.frameworks": {
+          "type": "array",
+          "default": [
+            "pdo",
+            "mysqli",
+            "wordpress",
+            "ezsql",
+            "laravel-db",
+            "doctrine"
+          ],
+          "description": "PHP frameworks to detect SQL queries in",
+          "items": {
+            "type": "string",
+            "enum": [
+              "pdo",
+              "mysqli",
+              "wordpress",
+              "ezsql",
+              "laravel-db",
+              "doctrine"
+            ]
+          }
+        },
+        "sqlens.schema.autoDiscover": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically discover database schema"
+        },
+        "sqlens.schema.driver": {
+          "type": "string",
+          "default": "mysql",
+          "enum": [
+            "mysql",
+            "postgresql"
+          ],
+          "description": "Database driver to use"
+        },
+        "sqlens.schema.host": {
+          "type": "string",
+          "default": "127.0.0.1",
+          "description": "Database host"
+        },
+        "sqlens.schema.port": {
+          "type": "number",
+          "default": 3306,
+          "description": "Database port"
+        },
+        "sqlens.schema.database": {
+          "type": "string",
+          "default": "app_db",
+          "description": "Database name"
+        },
+        "sqlens.schema.user": {
+          "type": "string",
+          "default": "readonly",
+          "description": "Database user (should have read-only access)"
+        },
+        "sqlens.schema.password": {
+          "type": "string",
+          "default": "",
+          "description": "Database password"
+        },
+        "sqlens.preview.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable query preview feature (requires database connection)"
+        },
+        "sqlens.preview.rowLimit": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Maximum number of rows to preview"
+        },
+        "sqlens.preview.timeoutMs": {
+          "type": "number",
+          "default": 2000,
+          "minimum": 500,
+          "maximum": 10000,
+          "description": "Query timeout in milliseconds"
+        },
+        "sqlens.preview.allowNonSelect": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow non-SELECT queries for preview (NOT RECOMMENDED)"
+        },
+        "sqlens.disabledRules": {
+          "type": "array",
+          "default": [],
+          "description": "List of rule types to disable (e.g. SELECT_STAR, NULL_COMPARISON). See documentation for all available rule types.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "php",
+        "aliases": [
+          "PHP"
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/pg": "^8.15.5",
+    "@types/vscode": "^1.103.0",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.25.8",
+    "eslint": "^9.32.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "mysql2": "^3.14.4",
+    "pg": "^8.16.3",
+    "php-parser": "^3.2.5"
+  }
+}

